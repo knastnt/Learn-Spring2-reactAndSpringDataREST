@@ -1,8 +1,6 @@
 package ru.knastnt.reactAndSpringData;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,14 +9,17 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NonNull
     private String firstName;
+    @NonNull
     private String lastName;
+    @NonNull
     private String description;
 }
