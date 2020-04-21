@@ -1,6 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-// const client = require('./client123');
+const client = require('./client123');
 
 class App extends React.Component {
 
@@ -17,7 +17,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <Employee key={employee._links.self.href} data={employee} />
+            <EmployeeList employees={this.state.employees}/>
         )
     }
 }
