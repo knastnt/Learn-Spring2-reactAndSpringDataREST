@@ -3,14 +3,19 @@
 // Определяем компонент
 Vue.component('user-table', {
     props: ['userlist'],
-    template: '<table>\n' +
-        '                <tbody>\n' +
+    template: '<table class="table">\n' +
+        '                <thead class="thead-light">\n' +
         '                <tr>\n' +
+        '                    <th>#</th>\n' +
         '                    <th>First Name</th>\n' +
         '                    <th>Last Name</th>\n' +
         '                    <th>Description</th>\n' +
         '                </tr>\n' +
-        '                <tr v-for="user in userlist">\n' +
+        '                </thead>\n' +
+
+        '                <tbody>\n' +
+        '                <tr v-for="(user, index) in userlist">\n' +
+        '                    <th scope="row">{{index}}</th>\n' +
         '                    <td>{{user.firstName}}</td>\n' +
         '                    <td>{{user.lastName}}</td>\n' +
         '                    <td>{{user.description}}</td>\n' +
