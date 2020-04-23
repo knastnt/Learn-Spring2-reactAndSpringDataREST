@@ -2,9 +2,14 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ReactJS + Spring Data REST</title>
+    <title>VueJS + Spring Data REST</title>
 
     <link rel="stylesheet" href="/main.css" />
+
+    <!--девелоперский вуй-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--а это для аджаксов-->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 </head>
 <body>
     привет
@@ -14,8 +19,12 @@
         <button type="submit">okay</button>
     </form>
 
-    <div id="react"></div>
+    <div id="vue-main-div">
+        <user-table v-bind:userlist = "userlist"></user-table>
+        <span v-if="userlisterror">{{userlisterror}}</span>
+    </div>
 
-    <script src="built/bundle.js"></script>
+
+    <script src="/app.js"></script>
 </body>
 </html>
