@@ -90,14 +90,16 @@ var vm = new Vue({
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
                 })
         },
-        createEmployer: function (form) {
-            this.show = false
-            vm.userlisterror = 'Создано! ' + JSON.stringify(form)
-        },
         submitCreateUserForm : function(form){
-            vm.userlisterror = 'test'
-            this.$refs.createUserForm.submit()
-            createEmployer(form);
+            //закрываем модальное окно
+            this.$bvModal.hide('modal-1')
+            
+            vm.userlisterror = 'created! ' + JSON.stringify(form)
+
+            //очищаем поля для следующего вызова
+            for (var key in form) {
+              form[key] = ''
+            }
         }
     },
     computed: {
