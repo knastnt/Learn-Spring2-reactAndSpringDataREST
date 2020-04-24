@@ -79,21 +79,29 @@ var vm = new Vue({
         navnop: 12
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
-        this.getAnswer()
+        this.loadEmployers(1, 1)
     },
     methods: { //методы
         navinp: function(page){
           console.log(page)
+            this.loadEmployers(page,1)
         },
         linkGen(page){
             return ''
             //return page  === 1 ? '?' : '?page=${page}'
         },
-        getAnswer: function () {
+        loadEmployers: function (page, size) {
+            page=page-1
+            var data = { 'page': page, 'size': size }
+            //if(page<2){ delete data.page }
+            var querystring = (new URLSearchParams(data)).toString()
+
             var vm = this
-            axios.get('/api/employees')
+            axios.get('/api/employees?' + querystring)
                 .then(function (response) {
                     vm.userlist = response.data._embedded.employees
+                    vm.navnop = response.data.page.totalPages
+                    vm.navvalue = response.data.page.number+1
                 })
                 .catch(function (error) {
                     vm.userlist = {}
