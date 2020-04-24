@@ -56,10 +56,62 @@
 
 
                 <!-- Modal -->
-                <b-modal id="modal-1" title="BootstrapVue">
-                    <p class="my-4">Hello from modal!</p>
+                <b-modal id="modal-1" title="BootstrapVue" @ok.prevent="submitCreateUserForm(form)">
+                            <b-form ref="createUserForm">
+                                <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
+                                    <b-form-input
+                                            id="input-1"
+                                            v-model="form.firstName"
+                                            required
+                                            placeholder="Введите имя"
+                                    ></b-form-input>
+                                </b-form-group>
+
+                                <b-form-group id="input-group-2" label="Фамилия:" label-for="input-2">
+                                    <b-form-input
+                                            id="input-2"
+                                            v-model="form.lastName"
+                                            required
+                                            placeholder="Введите фамилию"
+                                    ></b-form-input>
+                                </b-form-group>
+
+                                <b-form-group id="input-group-3" label="Описание:" label-for="input-3" description="Не обязательно.">
+                                    <b-form-input
+                                            id="input-3"
+                                            v-model="form.description"
+                                            placeholder="Введите описание"
+                                    ></b-form-input>
+                                </b-form-group>
+
+
+                                <b-button type="submit" variant="primary">Создать</b-button>
+                            </b-form>
                 </b-modal>
 
+
+                <template>
+                    <div class="overflow-auto">
+
+                        <b-table
+                                id="my-table"
+                                :items="items"
+                                :per-page="perPage"
+                                :current-page="currentPage"
+                                small
+                        ></b-table>
+
+                        <p class="mt-3">Current Page: {{ currentPage }}</p>
+
+                        <b-pagination
+                                v-model="currentPage"
+                                :total-rows="rows"
+                                :per-page="perPage"
+                                aria-controls="my-table"
+                        ></b-pagination>
+
+                    </div>
+                </template>
             </div>
             </div>
         </div>

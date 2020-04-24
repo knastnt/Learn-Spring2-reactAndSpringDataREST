@@ -3,8 +3,7 @@
 // Определяем компонент
 Vue.component('user-table', {
     props: ['userlist'],
-    template: '<div>\
-                <table class="table">\
+    template: '<table class="table">\
                     <thead class="thead-light">\
                         <tr>\
                             <th>#</th>\
@@ -21,21 +20,7 @@ Vue.component('user-table', {
                             <td>{{user.description}}</td>\
                         </tr>\
                         </tbody>\
-                </table>\
-                <nav>\
-                  <ul class="pagination pagination-sm">\
-                    <li class="page-item disabled">\
-                      <a class="page-link" href="#" tabindex="-1">Previous</a>\
-                    </li>\
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>\
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>\
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>\
-                    <li class="page-item">\
-                      <a class="page-link" href="#">Next</a>\
-                    </li>\
-                  </ul>\
-                </nav>\
-               </div>'
+                </table>'
 })
 
 
@@ -44,7 +29,51 @@ var vm = new Vue({
     data: {
         userlist: [],
         userlisterror: '',
-        showModal: false
+        showModal: false,
+
+        perPage: 3,
+        currentPage: 1,
+        items: [
+            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
+            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
+            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
+            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
+            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
+            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
+            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
+            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
+            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
+            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
+            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
+            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
+            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
+            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
+            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
+            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
+            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
+            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
+            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
+            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
+            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
+            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
+            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
+            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
+            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
+            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
+            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
+            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
+            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
+            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
+            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
+            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
+            { id: 9, first_name: 'Pearl', last_name: 'Slaghoople' }
+        ],
+
+        form: {
+            firstName: '',
+            lastName: '',
+            description: ''
+        },
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
         this.getAnswer()
@@ -60,6 +89,20 @@ var vm = new Vue({
                     vm.userlist = {}
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
                 })
+        },
+        createEmployer: function (form) {
+            this.show = false
+            vm.userlisterror = 'Создано! ' + JSON.stringify(form)
+        },
+        submitCreateUserForm : function(form){
+            vm.userlisterror = 'test'
+            this.$refs.createUserForm.submit()
+            createEmployer(form);
+        }
+    },
+    computed: {
+        rows() {
+            return this.items.length
         }
     }
 })
