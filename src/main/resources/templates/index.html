@@ -56,8 +56,8 @@
 
 
                 <!-- Modal -->
-                <b-modal id="modal-1" title="BootstrapVue" @ok.prevent="submitCreateUserForm(form)">
-                            <b-form ref="createUserForm">
+                <b-modal id="modal-1" title="BootstrapVue" hide-footer>
+                            <b-form @submit.prevent="submitCreateUserForm(form)">
                                 <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
                                     <b-form-input
                                             id="input-1"
