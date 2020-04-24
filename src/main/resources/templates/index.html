@@ -49,6 +49,13 @@
                 <user-table v-bind:userlist = "userlist"></user-table>
                 <span v-if="userlisterror">{{userlisterror}}</span>
 
+                <template>
+                    <div class="overflow-auto">
+                        <b-pagination-nav v-on:change="navinp" :link-gen="linkGen" :number-of-pages="navnop" v-model:value="navvalue"></b-pagination-nav>
+                        <!-- vm.navvalue=3 vm.navnop=9 -->
+                    </div>
+                </template>
+
                 <!-- Button trigger modal -->
                 <b-button v-b-modal.modal-1>
                     Добавить сотрудника

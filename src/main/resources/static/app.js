@@ -74,11 +74,21 @@ var vm = new Vue({
             lastName: '',
             description: ''
         },
+
+        navvalue: 3,
+        navnop: 12
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
         this.getAnswer()
     },
     methods: { //методы
+        navinp: function(page){
+          console.log(page)
+        },
+        linkGen(page){
+            return ''
+            //return page  === 1 ? '?' : '?page=${page}'
+        },
         getAnswer: function () {
             var vm = this
             axios.get('/api/employees')
