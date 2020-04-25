@@ -53,9 +53,13 @@ var vm = new Vue({
         submitCreateUserForm : function(form){
             //закрываем модальное окно
             this.$bvModal.hide('modal-1')
-            
+
+            form._csrf = vm.$refs.csrfToken.value
+
             vm.userlisterror = 'created! ' + JSON.stringify(form)
-            axios.post('/api/employees', form)
+            axios.post('/api/employees', form, {
+                headers: { "upgrade-insecure-requests": "1" }
+            })
                 .then(function (response) {
                     //vm.userlist = response.data._embedded.employees
                     console.log(response);

@@ -76,6 +76,9 @@
                 <!-- Modal -->
                 <b-modal id="modal-1" title="BootstrapVue" hide-footer>
                             <form is="b-form" @submit.prevent="submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
+
+                                <input type="hidden" th:value="${_csrf.token}" ref="csrfToken">
+
                                 <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
                                     <b-form-input
                                             id="input-1"
