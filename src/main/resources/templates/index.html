@@ -51,8 +51,8 @@
 
                 <template>
                     <div class="overflow-auto">
-                        <b-pagination-nav v-on:change="navinp" :link-gen="linkGen" :number-of-pages="navnop" v-model:value="navvalue"></b-pagination-nav>
-                        <!-- vm.navvalue=3 vm.navnop=9 -->
+                        <b-pagination-nav v-on:change="navChange" :link-gen="navLinkGen" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
+                        <!-- vm.navPage=3 vm.navPageCount=9 -->
                     </div>
                 </template>
 

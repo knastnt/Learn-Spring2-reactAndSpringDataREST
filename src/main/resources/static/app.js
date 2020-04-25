@@ -75,33 +75,36 @@ var vm = new Vue({
             description: ''
         },
 
-        navvalue: 3,
-        navnop: 12
+        navPage: 1,
+        navPageCount: 10,
+        navPageSize: 1,
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
-        this.loadEmployers(1, 1)
+        this.loadEmployers(this.navPage, this.navPageSize)
     },
     methods: { //методы
-        navinp: function(page){
-          console.log(page)
-            this.loadEmployers(page,1)
+        navChange: function(page){
+          this.loadEmployers(page)
         },
-        linkGen(page){
+        navLinkGen(page){
             return ''
             //return page  === 1 ? '?' : '?page=${page}'
         },
-        loadEmployers: function (page, size) {
+        loadEmployers: function (page) {
             page=page-1
-            var data = { 'page': page, 'size': size }
-            //if(page<2){ delete data.page }
-            var querystring = (new URLSearchParams(data)).toString()
 
             var vm = this
+
+            var data = { 'page': page, 'size': vm.navPageSize }
+            var querystring = (new URLSearchParams(data)).toString()
+
             axios.get('/api/employees?' + querystring)
                 .then(function (response) {
                     vm.userlist = response.data._embedded.employees
-                    vm.navnop = response.data.page.totalPages
-                    vm.navvalue = response.data.page.number+1
+
+                    vm.navPage = response.data.page.number+1
+                    vm.navPageCount = response.data.page.totalPages
+                    vm.navPageSize = response.data.page.size
                 })
                 .catch(function (error) {
                     vm.userlist = {}
