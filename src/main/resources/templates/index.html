@@ -46,15 +46,19 @@
             <div class="col">
             <div id="vue-main-div">
 
+
                 <user-table v-bind:userlist = "userlist"></user-table>
                 <span v-if="userlisterror">{{userlisterror}}</span>
 
-                <template>
-                    <div class="overflow-auto">
-                        <b-pagination-nav v-on:change="navChange" :link-gen="navLinkGen" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
+                <div class="row">
+                    <div class="overflow-auto col">
+                        <b-pagination-nav v-on:input="navChange" :link-gen="navLinkGen" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
                         <!-- vm.navPage=3 vm.navPageCount=9 -->
                     </div>
-                </template>
+                    <div class="col">
+                        <b-form-select v-model="navPageSize" :options="navSizeOptions" v-on:input="navSizeOptionsChange"></b-form-select>
+                    </div>
+                </div>
 
                 <!-- Button trigger modal -->
                 <b-button v-b-modal.modal-1>

@@ -78,24 +78,32 @@ var vm = new Vue({
         navPage: 1,
         navPageCount: 1,
         navPageSize: 2,
+        navSizeOptions: [
+            { value: 1, text: '1' },
+            { value: 2, text: '2' },
+            { value: 4, text: '4' },
+        ]
+
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
-        this.loadEmployers(this.navPage, this.navPageSize)
+        this.loadEmployers()
     },
     methods: { //методы
         navChange: function(page){
-          this.loadEmployers(page)
+            this.navPage = page
+            this.loadEmployers()
         },
         navLinkGen(page){
             return ''
             //return page  === 1 ? '?' : '?page=${page}'
         },
-        loadEmployers: function (page) {
-            page=page-1
-
+        navSizeOptionsChange: function(value){
+            this.loadEmployers()
+        },
+        loadEmployers: function () {
             var vm = this
 
-            var data = { 'page': page, 'size': vm.navPageSize }
+            var data = { 'page': vm.navPage-1, 'size': vm.navPageSize }
             var querystring = (new URLSearchParams(data)).toString()
 
             axios.get('/api/employees?' + querystring)
@@ -105,6 +113,8 @@ var vm = new Vue({
                     vm.navPage = response.data.page.number+1
                     vm.navPageCount = response.data.page.totalPages
                     vm.navPageSize = response.data.page.size
+
+                    if (vm.navPageCount < vm.navPage) {vm.navPage = vm.navPageCount}
                 })
                 .catch(function (error) {
                     vm.userlist = {}
