@@ -1,29 +1,3 @@
-
-
-// Определяем компонент
-Vue.component('user-table', {
-    props: ['userlist'],
-    template: '<table class="table">\
-                    <thead class="thead-light">\
-                        <tr>\
-                            <th>#</th>\
-                            <th>First Name</th>\
-                            <th>Last Name</th>\
-                            <th>Description</th>\
-                        </tr>\
-                        </thead>\
-                        <tbody>\
-                        <tr v-for="(user, index) in userlist">\
-                            <th scope="row">{{index}}</th>\
-                            <td>{{user.firstName}}</td>\
-                            <td>{{user.lastName}}</td>\
-                            <td>{{user.description}}</td>\
-                        </tr>\
-                        </tbody>\
-                </table>'
-})
-
-
 var vm = new Vue({
     el: '#vue-main-div',
     data: {
@@ -31,43 +5,6 @@ var vm = new Vue({
         userlisterror: '',
         showModal: false,
 
-        perPage: 3,
-        currentPage: 1,
-        items: [
-            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-            { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-            { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-            { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-            { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-            { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-            { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-            { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-            { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-            { id: 9, first_name: 'Pearl', last_name: 'Slaghoople' }
-        ],
 
         form: {
             firstName: '',
@@ -82,24 +19,15 @@ var vm = new Vue({
             { value: 1, text: '1' },
             { value: 2, text: '2' },
             { value: 4, text: '4' },
-        ]
+        ],
+
+        tableFields: ['firstName', 'lastName', 'description'],
 
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
         this.loadEmployers()
     },
     methods: { //методы
-        navChange: function(page){
-            this.navPage = page
-            this.loadEmployers()
-        },
-        navLinkGen(page){
-            return ''
-            //return page  === 1 ? '?' : '?page=${page}'
-        },
-        navSizeOptionsChange: function(value){
-            this.loadEmployers()
-        },
         loadEmployers: function () {
             var vm = this
 
@@ -131,11 +59,6 @@ var vm = new Vue({
             for (var key in form) {
               form[key] = ''
             }
-        }
-    },
-    computed: {
-        rows() {
-            return this.items.length
         }
     }
 })

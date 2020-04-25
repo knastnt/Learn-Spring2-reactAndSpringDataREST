@@ -47,16 +47,23 @@
             <div id="vue-main-div">
 
 
-                <user-table v-bind:userlist = "userlist"></user-table>
-                <span v-if="userlisterror">{{userlisterror}}</span>
+                <b-table
+                        id="emptable"
+                        :items="userlist"
+                        :fields="tableFields"
+                        thead-class="thead-light"
+                ></b-table>
+
+                <b-alert v-if="userlisterror" variant="danger" show>{{userlisterror}}</b-alert>
 
                 <div class="row">
+                    <!--пэйджинг-->
                     <div class="overflow-auto col">
-                        <b-pagination-nav v-on:input="navChange" :link-gen="navLinkGen" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
-                        <!-- vm.navPage=3 vm.navPageCount=9 -->
+                        <b-pagination-nav v-on:input="loadEmployers" :link-gen="function(){return ''}" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
                     </div>
+                    <!-- выбор количества элементов на странице-->
                     <div class="col">
-                        <b-form-select v-model="navPageSize" :options="navSizeOptions" v-on:input="navSizeOptionsChange"></b-form-select>
+                        <b-form-select v-model="navPageSize" :options="navSizeOptions" v-on:input="loadEmployers"></b-form-select>
                     </div>
                 </div>
 
@@ -101,28 +108,7 @@
                 </b-modal>
 
 
-                <template>
-                    <div class="overflow-auto">
 
-                        <b-table
-                                id="my-table"
-                                :items="items"
-                                :per-page="perPage"
-                                :current-page="currentPage"
-                                small
-                        ></b-table>
-
-                        <p class="mt-3">Current Page: {{ currentPage }}</p>
-
-                        <b-pagination
-                                v-model="currentPage"
-                                :total-rows="rows"
-                                :per-page="perPage"
-                                aria-controls="my-table"
-                        ></b-pagination>
-
-                    </div>
-                </template>
             </div>
             </div>
         </div>
