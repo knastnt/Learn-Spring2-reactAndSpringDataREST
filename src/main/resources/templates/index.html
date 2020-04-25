@@ -75,7 +75,7 @@
 
                 <!-- Modal -->
                 <b-modal id="modal-1" title="BootstrapVue" hide-footer>
-                            <b-form @submit.prevent="submitCreateUserForm(form)">
+                            <form is="b-form" @submit.prevent="submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
                                 <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
                                     <b-form-input
                                             id="input-1"
@@ -104,7 +104,7 @@
 
 
                                 <b-button type="submit" variant="primary">Создать</b-button>
-                            </b-form>
+                            </form>
                 </b-modal>
 
 

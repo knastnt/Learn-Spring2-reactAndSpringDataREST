@@ -7,6 +7,7 @@ var vm = new Vue({
 
 
         form: {
+            _csrf: '',
             firstName: '',
             lastName: '',
             description: ''
@@ -54,6 +55,14 @@ var vm = new Vue({
             this.$bvModal.hide('modal-1')
             
             vm.userlisterror = 'created! ' + JSON.stringify(form)
+            axios.post('/api/employees', form)
+                .then(function (response) {
+                    //vm.userlist = response.data._embedded.employees
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
+                })
 
             //очищаем поля для следующего вызова
             for (var key in form) {
