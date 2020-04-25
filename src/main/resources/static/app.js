@@ -76,8 +76,8 @@ var vm = new Vue({
         },
 
         navPage: 1,
-        navPageCount: 10,
-        navPageSize: 1,
+        navPageCount: 1,
+        navPageSize: 2,
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
         this.loadEmployers(this.navPage, this.navPageSize)

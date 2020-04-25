@@ -16,7 +16,13 @@ public class DatabaseLoader implements CommandLineRunner { //CommandLineRunner s
     public void run(String... args) throws Exception {
         Employee newEmployee = new Employee("Frodo", "Baggins", "ring bearer");
         employeeRepository.save(newEmployee);
-        Employee newEmployee2 = new Employee("Nikitos", "Grande", "supplyer");
-        employeeRepository.save(newEmployee2);
+        newEmployee = new Employee("Nikitos", "Grande", "supplyer");
+        employeeRepository.save(newEmployee);
+        newEmployee = new Employee("Ivan", "Ivanov", "traktorist");
+        employeeRepository.save(newEmployee);
+        newEmployee = new Employee("Klava", "Veselova", "prodavec");
+        employeeRepository.save(newEmployee);
+        newEmployee = new Employee("Petro", "Petrov", "buhgalter");
+        employeeRepository.save(newEmployee);
     }
 }
