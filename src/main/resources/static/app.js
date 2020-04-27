@@ -64,14 +64,15 @@ var vm = new Vue({
                 url: '/api/employees',
                 method: 'post',
                 data: form,
-                headers: {
-                    "content-type": "application/json",
-                    "Accept": "application/hal+json"
-                }
+                // headers: {
+                //     "content-type": "application/json",
+                //     "Accept": "application/hal+json"
+                // }
             })
                 .then(function (response) {
-                    //vm.userlist = response.data._embedded.employees
-                    console.log(response);
+                    // vm.userlist.push(response.data)
+                    // console.log(response);
+                    vm.loadEmployers()
                 })
                 .catch(function (error) {
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
