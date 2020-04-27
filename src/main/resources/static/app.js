@@ -7,7 +7,7 @@ var vm = new Vue({
 
 
         form: {
-            _csrf: '',
+            // _csrf: '',
             firstName: '',
             lastName: '',
             description: ''
@@ -54,11 +54,20 @@ var vm = new Vue({
             //закрываем модальное окно
             this.$bvModal.hide('modal-1')
 
-            form._csrf = vm.$refs.csrfToken.value
+            // form._csrf = vm.$refs.csrfToken.value
 
             vm.userlisterror = 'created! ' + JSON.stringify(form)
-            axios.post('/api/employees', form, {
-                headers: { "upgrade-insecure-requests": "1" }
+            // axios.post('/api/employees', form, {
+            //     headers: { "upgrade-insecure-requests": "1" }
+            // })
+            axios({
+                url: '/api/employees',
+                method: 'post',
+                data: form,
+                headers: {
+                    "content-type": "application/json",
+                    "Accept": "application/hal+json"
+                }
             })
                 .then(function (response) {
                     //vm.userlist = response.data._embedded.employees
