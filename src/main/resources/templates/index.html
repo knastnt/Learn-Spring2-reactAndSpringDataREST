@@ -44,80 +44,80 @@
 
         <div class="row mt-2">
             <div class="col">
-            <div id="vue-main-div">
+                <div id="vue-main-div">
 
 
-                <b-table
-                        id="emptable"
-                        :items="userlist"
-                        :fields="tableFields"
-                        thead-class="thead-light"
-                >
-                    <!-- A virtual composite column -->
-                    <template v-slot:cell(delbutton)="data">
-                        <b-button size="sm" v-on:Click="deleteEmp( data.item._links.self.href )">Delete</b-button>
-                    </template>
-                </b-table>
+                    <b-table
+                            id="emptable"
+                            :items="userlist"
+                            :fields="tableFields"
+                            thead-class="thead-light"
+                    >
+                        <!-- A virtual composite column -->
+                        <template v-slot:cell(delbutton)="data">
+                            <b-button size="sm" v-on:Click="deleteEmp( data.item._links.self.href )">Delete</b-button>
+                        </template>
+                    </b-table>
 
-                <b-alert v-if="userlisterror" variant="danger" show>{{userlisterror}}</b-alert>
+                    <b-alert v-if="userlisterror" variant="danger" show>{{userlisterror}}</b-alert>
 
-                <div class="row">
-                    <!--пэйджинг-->
-                    <div class="overflow-auto col">
-                        <b-pagination-nav v-on:input="loadEmployers" :link-gen="function(){return ''}" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
+                    <div class="row">
+                        <!--пэйджинг-->
+                        <div class="overflow-auto col">
+                            <b-pagination-nav v-on:input="loadEmployers" :link-gen="function(){return ''}" :number-of-pages="navPageCount" v-model:value="navPage"></b-pagination-nav>
+                        </div>
+                        <!-- выбор количества элементов на странице-->
+                        <div class="col">
+                            <b-form-select v-model="navPageSize" :options="navSizeOptions" v-on:input="loadEmployers"></b-form-select>
+                        </div>
                     </div>
-                    <!-- выбор количества элементов на странице-->
-                    <div class="col">
-                        <b-form-select v-model="navPageSize" :options="navSizeOptions" v-on:input="loadEmployers"></b-form-select>
-                    </div>
+
+                    <!-- Button trigger modal -->
+                    <b-button v-b-modal.modal-1>
+                        Добавить сотрудника
+                    </b-button>
+
+
+                    <!-- Modal -->
+                    <b-modal id="modal-1" title="BootstrapVue" hide-footer>
+                                <form is="b-form" @submit.prevent="submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
+
+    <!--                                <input type="hidden" th:value="${_csrf.token}" ref="csrfToken">-->
+
+                                    <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
+                                        <b-form-input
+                                                id="input-1"
+                                                v-model="form.firstName"
+                                                required
+                                                placeholder="Введите имя"
+                                        ></b-form-input>
+                                    </b-form-group>
+
+                                    <b-form-group id="input-group-2" label="Фамилия:" label-for="input-2">
+                                        <b-form-input
+                                                id="input-2"
+                                                v-model="form.lastName"
+                                                required
+                                                placeholder="Введите фамилию"
+                                        ></b-form-input>
+                                    </b-form-group>
+
+                                    <b-form-group id="input-group-3" label="Описание:" label-for="input-3" description="Не обязательно.">
+                                        <b-form-input
+                                                id="input-3"
+                                                v-model="form.description"
+                                                placeholder="Введите описание"
+                                        ></b-form-input>
+                                    </b-form-group>
+
+
+                                    <b-button type="submit" variant="primary">Создать</b-button>
+                                </form>
+                    </b-modal>
+
+
+
                 </div>
-
-                <!-- Button trigger modal -->
-                <b-button v-b-modal.modal-1>
-                    Добавить сотрудника
-                </b-button>
-
-
-                <!-- Modal -->
-                <b-modal id="modal-1" title="BootstrapVue" hide-footer>
-                            <form is="b-form" @submit.prevent="submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
-
-<!--                                <input type="hidden" th:value="${_csrf.token}" ref="csrfToken">-->
-
-                                <b-form-group id="input-group-1" label="Имя:" label-for="input-1">
-                                    <b-form-input
-                                            id="input-1"
-                                            v-model="form.firstName"
-                                            required
-                                            placeholder="Введите имя"
-                                    ></b-form-input>
-                                </b-form-group>
-
-                                <b-form-group id="input-group-2" label="Фамилия:" label-for="input-2">
-                                    <b-form-input
-                                            id="input-2"
-                                            v-model="form.lastName"
-                                            required
-                                            placeholder="Введите фамилию"
-                                    ></b-form-input>
-                                </b-form-group>
-
-                                <b-form-group id="input-group-3" label="Описание:" label-for="input-3" description="Не обязательно.">
-                                    <b-form-input
-                                            id="input-3"
-                                            v-model="form.description"
-                                            placeholder="Введите описание"
-                                    ></b-form-input>
-                                </b-form-group>
-
-
-                                <b-button type="submit" variant="primary">Создать</b-button>
-                            </form>
-                </b-modal>
-
-
-
-            </div>
             </div>
         </div>
 
