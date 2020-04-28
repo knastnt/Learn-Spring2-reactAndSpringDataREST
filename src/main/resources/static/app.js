@@ -89,7 +89,17 @@ var vm = new Vue({
             }
         },
         deleteEmp: function (url) {
-            console.log(url)
+            // console.log(url)
+            axios({
+                url: url,
+                method: 'delete'
+            })
+                .then(function (response) {
+                    vm.loadEmployers()
+                })
+                .catch(function (error) {
+                    vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
+                })
         }
     }
 })
