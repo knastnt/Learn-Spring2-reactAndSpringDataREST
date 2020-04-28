@@ -22,7 +22,12 @@ var vm = new Vue({
             { value: 4, text: '4' },
         ],
 
-        tableFields: ['firstName', 'lastName', 'description'],
+        tableFields: [
+            'firstName',
+            'lastName',
+            'description',
+            { key: 'delbutton', label: 'Delete' }
+        ],
 
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
@@ -82,6 +87,9 @@ var vm = new Vue({
             for (var key in form) {
               form[key] = ''
             }
+        },
+        deleteEmp: function (url) {
+            console.log(url)
         }
     }
 })

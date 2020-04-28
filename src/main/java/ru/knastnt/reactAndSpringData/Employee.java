@@ -1,5 +1,6 @@
 package ru.knastnt.reactAndSpringData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -21,5 +22,6 @@ public class Employee {
     @NonNull
     private String lastName;
     @NonNull
+//    @JsonIgnore - не передаёт этот параметр в REST
     private String description;
 }

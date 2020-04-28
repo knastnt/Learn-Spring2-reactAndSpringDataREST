@@ -52,7 +52,12 @@
                         :items="userlist"
                         :fields="tableFields"
                         thead-class="thead-light"
-                ></b-table>
+                >
+                    <!-- A virtual composite column -->
+                    <template v-slot:cell(delbutton)="data">
+                        <b-button size="sm" v-on:Click="deleteEmp( data.item._links.self.href )">Delete</b-button>
+                    </template>
+                </b-table>
 
                 <b-alert v-if="userlisterror" variant="danger" show>{{userlisterror}}</b-alert>
 
