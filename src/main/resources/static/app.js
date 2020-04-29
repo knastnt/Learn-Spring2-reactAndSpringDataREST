@@ -1,3 +1,5 @@
+let stompClient = null;
+
 var vm = new Vue({
     el: '#vue-main-div',
     data: {
@@ -32,6 +34,42 @@ var vm = new Vue({
 
         currentEditedEmployeer: null,
 
+    },
+    mounted: function () {
+        this.$nextTick(function () {
+            let socket = new SockJS('/payroll');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+
+                stompClient.subscribe('/topic/newEmployee', function (val) {
+                    console.log(val);
+                    //console.log(JSON.parse(val.body));
+                    // vm.list1 = JSON.parse(val.body);
+                    vm.loadEmployers();
+                });
+
+                stompClient.subscribe('/topic/deleteEmployee', function (val) {
+                    vm.loadEmployers();
+                });
+
+                stompClient.subscribe('/topic/updateEmployee', function (val) {
+                    vm.loadEmployers();
+                });
+            });
+
+            // let socket2 = new SockJS('/payroll');
+            // stompClient2 = Stomp.over(socket2);
+            // stompClient2.connect({}, function (frame) {
+            //     console.log('Connected: ' + frame);
+            //
+            //     stompClient2.subscribe('/stock/price-fast', function (val) {
+            //         console.log(val);
+            //         console.log(JSON.parse(val.body));
+            //         vm.list2 = JSON.parse(val.body);
+            //     });
+            // });
+        });
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
         this.loadEmployers()
