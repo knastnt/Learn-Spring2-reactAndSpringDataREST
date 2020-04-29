@@ -12,6 +12,7 @@ var vm = new Vue({
             lastName: '',
             description: ''
         },
+        formTypeEdit: false,
 
         navPage: 1,
         navPageCount: 1,
@@ -26,8 +27,10 @@ var vm = new Vue({
             'firstName',
             'lastName',
             'description',
-            { key: 'delbutton', label: 'Delete' }
+            { key: 'changeColumn', label: 'Change' }
         ],
+
+        currentEditedEmployeer: null,
 
     },
     created: function () { // хук жизненного цикла https://ru.vuejs.org/v2/guide/instance.html
@@ -82,11 +85,49 @@ var vm = new Vue({
                 .catch(function (error) {
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
                 })
+        },
+        submitEditUserForm : function(form){
+            //закрываем модальное окно
+            this.$bvModal.hide('modal-1')
 
-            //очищаем поля для следующего вызова
-            for (var key in form) {
-              form[key] = ''
+            // form._csrf = vm.$refs.csrfToken.value
+
+            vm.userlisterror = 'edited! ' + JSON.stringify(form)
+
+            axios({
+                url: vm.currentEditedEmployeer._links.self.href,
+                method: 'put',
+                data: vm.form,
+                headers: {
+                    'If-Match': vm.currentEditedEmployeer.ETag
+                }
+            })
+                .then(function (response) {
+                    // vm.userlist.push(response.data)
+                    // console.log(response);
+                    vm.loadEmployers()
+                })
+                .catch(function (error) {
+                    if (error.status === 412) {
+                        vm.userlisterror = 'Ошибка! Данный работник уже кем-то изменён, сохранение не возможно. Попробуйте снова' + JSON.stringify(error)
+                    }else{
+                        vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
+                    }
+
+                })
+        },
+        openCreateUserForm : function(form){
+            var vm = this
+
+            vm.formTypeEdit = false
+
+            //очищаем поля
+            for (var key in vm.form) {
+                vm.form[key] = ''
             }
+
+            //открываем модальное окно
+            vm.$bvModal.show('modal-1')
         },
         deleteEmp: function (url) {
             // console.log(url)
@@ -100,6 +141,46 @@ var vm = new Vue({
                 .catch(function (error) {
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
                 })
-        }
+        },
+        editEmp: function (url) {
+            var vm = this
+
+            console.log(url)
+            // axios({
+            //     url: url,
+            //     method: 'delete'
+            // })
+            //     .then(function (response) {
+            //         vm.loadEmployers()
+            //     })
+            //     .catch(function (error) {
+            //         vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
+            //     })
+
+
+            //Получаем объект работника из API
+            axios({
+                url: url,
+                method: 'get'
+            })
+                .then(function (response) {
+                    vm.formTypeEdit = true
+
+                    vm.currentEditedEmployeer = response.data
+                    vm.currentEditedEmployeer.ETag = response.headers.etag
+                    // vm.userlist.push(response.data)
+                    console.log(JSON.stringify(vm.currentEditedEmployeer));
+                    //vm.loadEmployers()
+                    vm.form.firstName = vm.currentEditedEmployeer.firstName
+                    vm.form.lastName = vm.currentEditedEmployeer.lastName
+                    vm.form.description = vm.currentEditedEmployeer.description
+                    //открываем модальное окно
+                    vm.$bvModal.show('modal-1')
+
+                })
+                .catch(function (error) {
+                    vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
+                })
+        },
     }
 })

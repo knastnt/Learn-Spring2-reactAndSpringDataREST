@@ -15,7 +15,8 @@ public class Employee {
     private Long id;
 
     @Version
-    @JsonIgnore // не передаёт этот параметр в REST
+    @JsonIgnore // не передаёт этот параметр в REST, хотя и без этого тоже не передаёт.
+    // Версия передаётся в заголовке в директиве ETag
     private Long version;
 
     @NonNull

@@ -54,7 +54,8 @@
                             thead-class="thead-light"
                     >
                         <!-- A virtual composite column -->
-                        <template v-slot:cell(delbutton)="data">
+                        <template v-slot:cell(changeColumn)="data">
+                            <b-button size="sm" v-on:Click="editEmp( data.item._links.self.href )">Edit</b-button>
                             <b-button size="sm" v-on:Click="deleteEmp( data.item._links.self.href )">Delete</b-button>
                         </template>
                     </b-table>
@@ -73,14 +74,14 @@
                     </div>
 
                     <!-- Button trigger modal -->
-                    <b-button v-b-modal.modal-1>
+                    <b-button v-on:click = "openCreateUserForm">
                         Добавить сотрудника
                     </b-button>
 
 
                     <!-- Modal -->
                     <b-modal id="modal-1" title="BootstrapVue" hide-footer>
-                                <form is="b-form" @submit.prevent="submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
+                                <form is="b-form" @submit.prevent="formTypeEdit ? submitEditUserForm(form) : submitCreateUserForm(form)" th:method="post" th:action="@{/api/employees}">
 
     <!--                                <input type="hidden" th:value="${_csrf.token}" ref="csrfToken">-->
 
