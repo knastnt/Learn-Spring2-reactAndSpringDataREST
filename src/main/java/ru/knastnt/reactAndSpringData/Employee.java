@@ -25,4 +25,8 @@ public class Employee {
     private String lastName;
     @NonNull
     private String description;
+
+    @NonNull
+    @ManyToOne
+    private Manager manager;
 }
