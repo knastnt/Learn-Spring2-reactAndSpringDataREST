@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,8 +34,8 @@ public class Manager {
     private String password;
 
     @NonNull
-    @Type(type = "string-array")
-    private String[] roles;
+    @ElementCollection(fetch = FetchType.EAGER) //Не пойму, но лень кидает ошибку при аутентификации
+    private List<String> roles;
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
