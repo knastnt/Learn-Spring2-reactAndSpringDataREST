@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Data
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @NoArgsConstructor
 public class Manager {
 
@@ -27,7 +27,7 @@ public class Manager {
 
     @NonNull
     @Column(unique = true)
-    private String name;
+    private String name; //Это будет его уникальный логин. Логин юзеру менять нельзя!
 
     @NonNull
     @JsonIgnore
@@ -37,7 +37,13 @@ public class Manager {
     @ElementCollection(fetch = FetchType.EAGER) //Не пойму, но лень кидает ошибку при аутентификации
     private List<String> roles;
 
+    public Manager(String name, String password, List<String> roles) {
+        this.name = name;
+        this.setPassword(password);
+        this.roles = roles;
+    }
+
     public void setPassword(String password) {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = /*"{bcrypt}" + */PASSWORD_ENCODER.encode(password);
     }
 }

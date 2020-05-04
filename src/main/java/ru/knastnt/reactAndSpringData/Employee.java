@@ -29,4 +29,6 @@ public class Employee {
     @NonNull
     @ManyToOne(fetch = FetchType.EAGER) //Не пойму, но лень кидает ошибку при аутентификации
     private Manager manager;
+
+
 }

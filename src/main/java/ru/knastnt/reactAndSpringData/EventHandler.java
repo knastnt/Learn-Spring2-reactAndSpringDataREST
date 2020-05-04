@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import static ru.knastnt.reactAndSpringData.WebSocketConfiguration.MESSAGE_PREFIX;
 
 @Component
-@RepositoryEventHandler
+@RepositoryEventHandler// depricated (Employee.class)
 public class EventHandler {
 
     private final SimpMessagingTemplate websocket;
