@@ -26,11 +26,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {  // р
     @Override
     protected void configure(HttpSecurity http) throws Exception {  //основная политика безопасности
         http
-                .headers().frameOptions().sameOrigin()  //для работы h2-console
+                .headers().frameOptions().sameOrigin()  //для работы h2-console. чтобы сделать для конкретного url, читай тут: https://stackoverflow.com/questions/42257402/disable-x-frameoptions-response-header-for-a-url-spring-security-java-config
         .and()
                 .authorizeRequests()
                     //Пути, перечисленные в antMatchers (), получают безусловный доступ, поскольку нет никаких причин блокировать статические веб-ресурсы.
-                    .antMatchers("/built/**", "/main.css", "/h2-console/**").permitAll()
+                    .antMatchers("/built/**", "/main.css"/*, /-*разрешить консоль без авторизации*-/"/h2-console/**"*/).permitAll()
                     //Все, что не соответствует этой политике, попадает в anyRequest().authenticated(), то есть требует аутентификации.
                     .anyRequest().authenticated()
         .and()
@@ -42,8 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {  // р
                 .httpBasic()
         .and()
                 //Базовый логин также настроен с отключенной CSRF. Это в основном для демонстраций и не рекомендуется для производственных систем. Тоже для curl'а
-                .csrf().disable()   // отключает весь к чертям
-                //.csrf().ignoringAntMatchers("/h2-console/**").and()   //отключает только для консоли
+                //.csrf().disable()   // отключает весь к чертям
+                .csrf().ignoringAntMatchers("/h2-console/**").and()   //отключает только для консоли
 
                 .logout()
                     //Перенаправление пользователя при логауте
