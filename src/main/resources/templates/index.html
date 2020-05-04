@@ -26,6 +26,10 @@
     <!--для связи через WebSocks-->
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 <body>
     <div class="container">

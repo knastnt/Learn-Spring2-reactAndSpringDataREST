@@ -103,7 +103,6 @@ var vm = new Vue({
 
             // form._csrf = vm.$refs.csrfToken.value
 
-            vm.userlisterror = 'created! ' + JSON.stringify(form)
             // axios.post('/api/employees', form, {
             //     headers: { "upgrade-insecure-requests": "1" }
             // })
@@ -115,11 +114,15 @@ var vm = new Vue({
                 //     "content-type": "application/json",
                 //     "Accept": "application/hal+json"
                 // }
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="_csrf"]').getAttribute('content')
+                }
             })
                 .then(function (response) {
                     // vm.userlist.push(response.data)
                     // console.log(response);
                     vm.loadEmployers()
+                    vm.userlisterror = 'created! ' + JSON.stringify(form)
                 })
                 .catch(function (error) {
                     vm.userlisterror = 'Ошибка! ' + JSON.stringify(error)
@@ -138,7 +141,8 @@ var vm = new Vue({
                 method: 'patch',
                 data: vm.form,
                 headers: {
-                    'If-Match': vm.currentEditedEmployeer.ETag
+                    'If-Match': vm.currentEditedEmployeer.ETag,
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="_csrf"]').getAttribute('content')
                 }
             })
                 .then(function (response) {
@@ -172,7 +176,10 @@ var vm = new Vue({
             // console.log(url)
             axios({
                 url: url,
-                method: 'delete'
+                method: 'delete',
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="_csrf"]').getAttribute('content')
+                }
             })
                 .then(function (response) {
                     vm.loadEmployers()
