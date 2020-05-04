@@ -29,7 +29,8 @@ var vm = new Vue({
             'firstName',
             'lastName',
             'description',
-            { key: 'changeColumn', label: 'Change' }
+            { key: 'manager.name', label: 'Manager' },
+            { key: 'changeColumn', label: 'Change', variant: 'warning' }
         ],
 
         currentEditedEmployeer: null,
