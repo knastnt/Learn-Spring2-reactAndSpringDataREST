@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long> /* он также экстэндит CRUD Repository*/ {
 
     @Override
-    @PreAuthorize("#employee?.manager == null or #employee?.manager?.name == authentication?.name") //сравнивается только name (логин). Знак ? это проверка на null
+    @PreAuthorize(/* не может быть null, т.к. перед этим вызывается @HandleBeforeCreate "#employee?.manager == null or */"#employee?.manager?.name == authentication?.name") //сравнивается только name (логин). Знак ? это проверка на null
     Employee save(@Param("employee") Employee entity);
 
     @Override

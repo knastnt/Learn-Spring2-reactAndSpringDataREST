@@ -135,7 +135,7 @@ var vm = new Vue({
 
             axios({
                 url: vm.currentEditedEmployeer._links.self.href,
-                method: 'put',
+                method: 'patch',
                 data: vm.form,
                 headers: {
                     'If-Match': vm.currentEditedEmployeer.ETag
